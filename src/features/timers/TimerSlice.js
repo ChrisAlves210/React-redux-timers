@@ -30,9 +30,33 @@ const timersSlice = createSlice({
         timer.isRunning = false;
       }
     },
+    restartTimer: (state, action) => {
+      const timer = state.find((t) => t.id === action.payload);
+      if (timer) {
+        timer.elapsed = 0;
+        timer.startTime = Date.now();
+        timer.isRunning = true;
+      }
+    },
+    renameTimer: (state, action) => {
+      const { id, label } = action.payload;
+      const timer = state.find((t) => t.id === id);
+      if (timer && typeof label === "string") {
+        const trimmed = label.trim();
+        if (trimmed) {
+          timer.label = trimmed;
+        }
+      }
+    },
   },
 });
 
-export const { addTimer, pauseTimer, resumeTimer, resetTimer } =
-  timersSlice.actions;
+export const {
+  addTimer,
+  pauseTimer,
+  resumeTimer,
+  resetTimer,
+  restartTimer,
+  renameTimer,
+} = timersSlice.actions;
 export default timersSlice.reducer;

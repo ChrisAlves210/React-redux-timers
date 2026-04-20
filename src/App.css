@@ -1,19 +1,41 @@
+:root {
+  --bg: #f0f2f5;
+  --text: #333;
+  --heading: #2c3e50;
+  --surface: #ffffff;
+  --button: #3498db;
+  --button-hover: #2980b9;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --input-border: #b8c2cc;
+}
+
+body.dark {
+  --bg: #121820;
+  --text: #e9edf2;
+  --heading: #f0f6ff;
+  --surface: #1a2430;
+  --button: #4aa8f0;
+  --button-hover: #6db9f2;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  --input-border: #4f6277;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
+  background-color: var(--bg);
   margin: 0;
   padding: 20px;
-  color: #333;
+  color: var(--text);
 }
 
 h1,
 h2,
 h3 {
-  color: #2c3e50;
+  color: var(--heading);
 }
 
 button {
-  background-color: #3498db;
+  background-color: var(--button);
   color: white;
   border: none;
   padding: 8px 12px;
@@ -24,28 +46,83 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: var(--button-hover);
+}
+
+.app-shell {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.theme-toggle {
+  white-space: nowrap;
 }
 
 .timer-board {
-  max-width: 600px;
+  max-width: 680px;
   margin: auto;
 }
 
 .timer-card {
-  background: white;
+  background: var(--surface);
   padding: 16px;
   margin-bottom: 12px;
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, opacity 0.25s ease;
+  animation: card-enter 0.25s ease;
 }
 
 .timer-card:hover {
   transform: translateY(-2px);
 }
 
+.timer-label {
+  cursor: text;
+}
+
+.timer-label-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 6px 8px;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  margin: 0.35em 0;
+  background: transparent;
+  color: var(--heading);
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 600px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-toggle {
+    width: 100%;
+  }
+
   .timer-card {
     padding: 12px;
     font-size: 14px;
