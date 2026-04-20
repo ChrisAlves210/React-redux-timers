@@ -1,18 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createTimer } from "./createTimer";
 
-const initialState = {
-  items: [],
-};
-
-const timerSlice = createSlice({
+const timersSlice = createSlice({
   name: "timers",
-  initialState,
+  initialState: [],
   reducers: {
     addTimer: (state, action) => {
-      state.items.push(action.payload);
+      state.push(createTimer(action.payload));
+    },
+    pauseTimer: (state, action) => {
+      const timer = state.find((t) => t.id === action.payload);
+      if (timer && timer.isRunning) {
+        timer.elapsed += Date.now() - timer.startTime;
+        timer.isRunning = false;
+      }
+    },
+    resumeTimer: (state, action) => {
+      const timer = state.find((t) => t.id === action.payload);
+      if (timer && !timer.isRunning) {
+        timer.startTime = Date.now();
+        timer.isRunning = true;
+      }
+    },
+    resetTimer: (state, action) => {
+      const timer = state.find((t) => t.id === action.payload);
+      if (timer) {
+        timer.elapsed = 0;
+        timer.startTime = Date.now();
+        timer.isRunning = false;
+      }
     },
   },
 });
 
-export const { addTimer } = timerSlice.actions;
-export default timerSlice.reducer;
+export const { addTimer, pauseTimer, resumeTimer, resetTimer } =
+  timersSlice.actions;
+export default timersSlice.reducer;
