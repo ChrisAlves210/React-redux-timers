@@ -14,7 +14,7 @@ function TimerBoard() {
 
   return React.createElement(
     "div",
-    null,
+    { className: "timer-board" },
     React.createElement("h2", null, "All Timers"),
     React.createElement(
       "button",

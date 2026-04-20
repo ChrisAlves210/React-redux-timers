@@ -7,12 +7,6 @@ import {
 } from "../features/timers/TimerSlice";
 import { formatTime } from "../utils/formatTime";
 
-const cardStyle = {
-  border: "1px solid #ccc",
-  padding: 10,
-  marginBottom: 10,
-};
-
 const TimerCard = ({ timer }) => {
   const dispatch = useDispatch();
   const [displayTime, setDisplayTime] = useState(timer.elapsed);
@@ -44,7 +38,7 @@ const TimerCard = ({ timer }) => {
 
   return React.createElement(
     "div",
-    { style: cardStyle },
+    { className: "timer-card" },
     React.createElement("h3", null, timer.label),
     React.createElement(
       "p",
